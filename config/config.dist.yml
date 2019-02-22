@@ -1,6 +1,4 @@
-app:
-    url: https://api.trello.com/1
-    account:
-        key: 
-        token: 
+url: https://api.trello.com/1
+key: 
+token: 
 
