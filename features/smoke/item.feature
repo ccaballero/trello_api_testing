@@ -50,3 +50,4 @@ Feature:
   Scenario: Delete items
     When I send a DELETE request to my/items/<item_id>
     Then I expect status code 204
+
