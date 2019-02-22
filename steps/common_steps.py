@@ -1,5 +1,5 @@
 import json
-from behave import *
+# from behave import *
 from compare import expect
 from utils.utils import map_url
 

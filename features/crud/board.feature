@@ -30,7 +30,7 @@ Feature: CRUD Board
     And with valid body
 
   @delete @acceptance
-  Scenario : Check if user is able to submit GET API request
+  Scenario: Check if user is able to submit GET API request
 
     Given I want to execute service <serviceName>
     When I send a DELETE request to /boards/{id}
