@@ -1,6 +1,4 @@
-app:
-  url: https://www.pivotaltracker.com/services/v2/
-  account:
-    token: 
-    username: 
-    password:
+url: https://api.trello.com/1
+key: 
+token: 
+
