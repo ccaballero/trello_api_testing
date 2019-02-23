@@ -10,10 +10,11 @@ use_step_matcher("re")
 def step_impl(context, method, end_point):
     if context.text:
         context.object_data = json.loads(context.text)
-        context.response = context.request_api.execute_request(method, map_url(end_point, context),
-                                                               data=context.object_data)
+        #context.response = context.request_api.execute_request(method, map_url(end_point, context),
+        #                                                       data=context.object_data)
     else:
-        context.response = context.request_api.execute_request(method, map_url(end_point, context))
+        pass
+        #context.response = context.request_api.execute_request(method, map_url(end_point, context))
 
 
 @then(u'I expect status code (.*)')

@@ -23,8 +23,8 @@ def step_impl(context, status_code):
   expect(context.response.status_code).to_equals(status_code)
   
 
-@then('with valid body')
-def step_impl(context, status_code):
-    pass
-
+#   @then('with valid body')
+#   def step_impl(context, status_code):
+#       pass
+#
   

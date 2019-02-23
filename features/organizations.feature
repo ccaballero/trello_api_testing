@@ -9,10 +9,11 @@ collections of members and boards.
     @acceptance @create
     Scenario: Create a new team
         When I send a POST request to /organizations
-         And I set the query param displayName as "example"
-         And I set the query param desc as "description example"
-         And I set the query param name as "example"
-         And I set the query param website as "http://example.io"
+        And I set the query params:
+            | displayName | example             |
+            |        desc | description example |
+            |        name | example             |
+            |     website | http://example.io   |
         Then I get a response status code 200
          And I get a response json based on json schema
         """
