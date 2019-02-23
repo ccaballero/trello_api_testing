@@ -1,0 +1,5 @@
+behave==1.2.6
+compare==0.2b0
+jsonschema==2.6.0
+PyYAML==3.13
+requests==2.18.4
