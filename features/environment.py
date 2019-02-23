@@ -4,7 +4,7 @@ import yaml
 global config
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-config = yaml.load(open(dir_path+'/config/config.yml'))
+config = yaml.load(open(dir_path+'/../config/config.yml'))
 
 def before_all(context):
     context.url = config['url']
