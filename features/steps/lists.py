@@ -10,6 +10,7 @@ def step_impl(context):
   board_name = uuid.uuid4()
   print(f'{context.url}/boards/?name={board_name}&key={context.key}&token={context.token}')
   r = requests.post(f'{context.url}/boards/?name={board_name}&key={context.key}&token={context.token}')
+  print(r.status_code)
   expect(r.status_code).to_equal(requests.codes.ok)
   context.board_id = r.json()["id"]
   
