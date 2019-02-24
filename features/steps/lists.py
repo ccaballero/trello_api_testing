@@ -14,10 +14,10 @@ def step_impl(context):
     expect(r.status_code).to_equal(requests.codes.ok)
     context.board_id = r.json()["id"]
 
-@when(u'I send a POST request to {endpoint} with name {name}')
-def step_impl(context, endpoint, name):
-    r = requests.post(f'{context.url}{endpoint}?name={name}&idBoard={context.board_id}&key={context.key}&token={context.token}')
-    context.response = r
+#@when(u'I send a POST request to {endpoint} with name {name}')
+#def step_impl(context, endpoint, name):
+#    r = requests.post(f'{context.url}{endpoint}?name={name}&idBoard={context.board_id}&key={context.key}&token={context.token}')
+#    context.response = r
 
 @then(u'I get a resp0nse with  HTTP status code {status_code:d}')
 def step_impl(context, status_code):

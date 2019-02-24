@@ -41,3 +41,13 @@ Parameters definition:
             |        desc | description example |
             |     website | http://example.io   |
 
+    @negative @read
+    Scenario: Read information from a nonexistent resource
+        When I send a GET request to /organization/nonexistent
+        Then I get a response status code 404
+         And I get a response header content-type text/plain
+         And I get a response text
+        """
+        model not found
+        """
+
