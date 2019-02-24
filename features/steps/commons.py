@@ -1,9 +1,9 @@
-import json
-import requests
 from compare import expect
+from json import loads
 from jsonschema import validate
+from requests import request
 
-@step(u'I send a {method} request to {endpoint}')
+@when(u'I send a {method} request to {endpoint}')
 def step_impl(context,method,endpoint):
     context.method = method
     context.endpoint = endpoint
@@ -18,7 +18,7 @@ def step_impl(context):
     for row in context.table:
         query[row[0]] = row[1]
 
-    response = requests.request(
+    response = request(
         context.method,
         context.url+context.endpoint,
         params=query)
@@ -37,14 +37,15 @@ def step_impl(context,header,value):
 
 @then(u'I get a response json based on json schema')
 def step_impl(context):
-    schema = json.loads(context.text)
-    body = json.loads(context.body_response)
+    schema = loads(context.text)
+    body = loads(context.body_response)
+    context.id = body['id']
 
     validate(body,schema)
 
 @then(u'I get a return values')
 def step_impl(context):
-    body = json.loads(context.body_response)
+    body = loads(context.body_response)
 
     for row in context.table:
         expect(body[row[0]]).to_equal(row[1])

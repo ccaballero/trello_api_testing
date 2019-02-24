@@ -38,10 +38,10 @@ collections of members and boards.
             |     website | http://example.io   |
 
     @negative @create
-    Scenario: Create a new team without mandatory param
+    Scenario: Create a new team without mandatory param displayName
         When I send a POST request to /organizations
          And I set the query params:
-            | displayName | example             |
+            |        name | example             |
             |        desc | description example |
             |     website | http://example.io   |
         Then I get a response status code 400
