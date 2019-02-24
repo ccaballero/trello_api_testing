@@ -3,25 +3,34 @@ from json import loads
 from jsonschema import validate
 from requests import request
 
-@when(u'I send a {method} request to {endpoint}')
-def step_impl(context,method,endpoint):
-    context.method = method
-    context.endpoint = endpoint
-
-@when(u'I set the query params')
+@when(u'I set the query parameters')
 def step_impl(context):
-    query = {
-        'key': context.key,
-        'token': context.token
-    }
+    query = {}
 
     for row in context.table:
         query[row[0]] = row[1]
 
+    context.parameters = query
+
+@when(u'I send a {method} request to {endpoint}')
+def step_impl(context,method,endpoint):
+    context.method = method
+
+    if '{id}' in endpoint:
+        endpoint = endpoint.replace('{id}',context.id)
+
+    context.endpoint = endpoint
+
+    if 'parameters' not in context:
+        context.parameters = {}
+
+    context.parameters['key'] = context.key
+    context.parameters['token'] = context.token
+
     response = request(
         context.method,
         context.url+context.endpoint,
-        params=query)
+        params=context.parameters)
 
     context.status_code = response.status_code
     context.headers = response.headers
@@ -39,8 +48,10 @@ def step_impl(context,header,value):
 def step_impl(context):
     schema = loads(context.text)
     body = loads(context.body_response)
+
     context.id = body['id']
 
+    print('response =>',context.body_response)
     validate(body,schema)
 
 @then(u'I get a return values')
@@ -52,5 +63,6 @@ def step_impl(context):
 
 @then(u'I get a response text')
 def step_impl(context):
+    print('response =>',context.body_response)
     expect(context.body_response).to_equal(context.text)
 
