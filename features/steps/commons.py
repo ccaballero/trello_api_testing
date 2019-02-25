@@ -84,5 +84,6 @@ def step_impl(context):
 @then(u'I get a response text')
 def step_impl(context):
     print('==> response',context.body_response)
-    expect(context.body_response).to_equal(context.text)
+    text = context.text.replace('\n','').replace('\r','')
+    expect(context.body_response).to_equal(text)
 
