@@ -1,6 +1,8 @@
 from compare import expect
 from json import loads
+from re import match
 from requests import request
+from uuid import uuid4
 
 @given(u'I have an existing organization with parameters')
 def step_impl(context):
@@ -10,12 +12,20 @@ def step_impl(context):
     }
 
     for row in context.table:
-        query[row[0]] = row[1]
+        if match('\{[A-Za-z0-9_\-]+\}',row[1]):
+            if 'generated' not in context:
+                context.generated = {}
+
+            context.generated[row[1]] = 'o'+str(uuid4()).replace('-','')
+            query[row[0]] = context.generated[row[1]]
+        else:
+            query[row[0]] = row[1]
 
     response = request('POST',context.url+'/organizations',params=query)
-    body = loads(response.text)
+    print('==> query parameters:',query)
 
     expect(response.status_code).to_equal(200)
 
+    body = loads(response.text)
     context.id = body['id']
 

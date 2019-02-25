@@ -1,4 +1,4 @@
-# /organizations
+# GET /organizations/{id}
 # author: Carlos E. Caballero B.
 
 @organizations @crud
@@ -13,7 +13,8 @@ Parameters definition:
     @acceptance @read
     Scenario: Read information of a pre-established organization
        Given I have an existing organization with parameters
-            |        name | example             |
+            |   PARAMETER | VALUE               |
+            |        name | {organization}      |
             | displayName | example             |
             |        desc | description example |
             |     website | http://example.io   |
@@ -36,10 +37,12 @@ Parameters definition:
         }
         """
          And I get a return values:
-            |        name | example             |
-            | displayName | example             |
-            |        desc | description example |
-            |     website | http://example.io   |
+            | JSON PROPERTY | VALUE                             |
+            |          name | {organization}                    |
+            |   displayName | example                           |
+            |          desc | description example               |
+            |           url | https://trello.com/{organization} |
+            |       website | http://example.io                 |
 
     @negative @read
     Scenario: Read information from a nonexistent resource

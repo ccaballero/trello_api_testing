@@ -1,4 +1,4 @@
-# /organizations
+# POST /organizations
 # author: Carlos E. Caballero B.
 
 @organizations @crud
@@ -18,7 +18,7 @@ Parameters definition:
     Scenario: Create a new team
         When I set the query parameters:
             | QUERY PARAMETER | VALUE               |
-            |            name | {random}            |
+            |            name | {organization}      |
             |     displayName | example             |
             |            desc | description example |
             |         website | http://example.io   |
@@ -41,15 +41,15 @@ Parameters definition:
         }
         """
         And I get a return values:
-            | JSON PROPERTY | VALUE                       |
-            |          name | {random}                    |
-            |   displayName | example                     |
-            |          desc | description example         |
-            |           url | https://trello.com/{random} |
-            |       website | http://example.io           |
+            | JSON PROPERTY | VALUE                             |
+            |          name | {organization}                    |
+            |   displayName | example                           |
+            |          desc | description example               |
+            |           url | https://trello.com/{organization} |
+            |       website | http://example.io                 |
 
     @negative @create
-    Scenario: Create a new team without mandatory param displayName
+    Scenario: Create a new team without mandatory parameter displayName
         When I set the query parameters:
             | QUERY PARAMETER | VALUE               |
             |            name | example             |
@@ -63,63 +63,3 @@ Parameters definition:
         Display Name must be at least 1 character
         """
  
-    @negative @create
-    Scenario: Create a new team with param name with 1 characters
-        When I set the query parameters:
-            | QUERY PARAMETER | VALUE               |
-            |            name | e                   |
-            |            desc | description example |
-            |         website | http://example.io   |
-         And I send a POST request to /organizations
-        Then I get a response status code 400
-         And I get a response header content-type text/plain
-         And I get a response text
-        """
-        Display Name must be at least 1 character
-        """
- 
-    @negative @create
-    Scenario: Create a new team with param name with uppercase characters
-        When I set the query parameters:
-            | QUERY PARAMETER | VALUE               |
-            |            name | EXAMPLE             |
-            |            desc | description example |
-            |         website | http://example.io   |
-         And I send a POST request to /organizations
-        Then I get a response status code 400
-         And I get a response header content-type text/plain
-         And I get a response text
-        """
-        Display Name must be at least 1 character
-        """
- 
-    @negative @create
-    Scenario: Create a new team with param name with special characters
-        When I set the query parameters:
-            | QUERY PARAMETER | VALUE               |
-            |            name | $example            |
-            |            desc | description example |
-            |         website | http://example.io   |
-         And I send a POST request to /organizations
-        Then I get a response status code 400
-         And I get a response header content-type text/plain
-         And I get a response text
-        """
-        Display Name must be at least 1 character
-        """
-
-    @negative @create
-    Scenario: Create a new team with param website without protocol
-        When I set the query parameters:
-            | QUERY PARAMETER | VALUE               |
-            |            name | $example            |
-            |            desc | description example |
-            |         website | example.io          |
-         And I send a POST request to /organizations
-        Then I get a response status code 400
-         And I get a response header content-type text/plain
-         And I get a response text
-        """
-        Display Name must be at least 1 character
-        """
-

@@ -11,17 +11,17 @@ def step_impl(context):
     query = {}
 
     for row in context.table:
-        if match('\{[A-Za-z0-9]+\}',row[1]):
+        if match('\{[A-Za-z0-9_\-]+\}',row[1]):
             if 'generated' not in context:
                 context.generated = {}
 
-            context.generated[row[1]] = str(uuid4()).replace('-','')
+            context.generated[row[1]] = 'o'+str(uuid4()).replace('-','')
             query[row[0]] = context.generated[row[1]]
         else:
             query[row[0]] = row[1]
 
     context.parameters = query
-    print('query parameters',context.parameters)
+    print('==> query parameters:',context.parameters)
 
 @when(u'I send a {method} request to {endpoint}')
 def step_impl(context,method,endpoint):
@@ -49,12 +49,12 @@ def step_impl(context,method,endpoint):
 
 @then(u'I get a response status code {status_code:d}')
 def step_impl(context,status_code):
-    print('status code =>',context.status_code)
+    print('==> status code:',context.status_code)
     expect(context.status_code).to_equal(status_code)
 
 @then(u'I get a response header {header} {value}')
 def step_impl(context,header,value):
-    print('header',header,'=>',context.headers[header])
+    print('==> header:',header,context.headers[header])
     expect(value in context.headers[header]).to_be_truthy()
 
 @then(u'I get a response json based on json schema')
@@ -64,7 +64,7 @@ def step_impl(context):
 
     context.id = body['id']
 
-    print('response =>',context.body_response)
+    print('==> response:',context.body_response)
     validate(body,schema)
 
 @then(u'I get a return values')
@@ -74,15 +74,15 @@ def step_impl(context):
     for row in context.table:
         value = row[1]
 
-        if search('\{[A-Za-z0-9]+\}',value):
+        if search('\{[A-Za-z0-9_\-]+\}',value):
             for key, _value in context.generated.items():
-                value=row[1].replace(key,_value)
+                value = value.replace(key,_value)
 
-        print('json property:',row[0],':',value)
+        print('==> json property:',row[0],value)
         expect(body[row[0]]).to_equal(value)
 
 @then(u'I get a response text')
 def step_impl(context):
-    print('response =>',context.body_response)
+    print('==> response',context.body_response)
     expect(context.body_response).to_equal(context.text)
 
