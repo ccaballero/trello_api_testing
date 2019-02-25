@@ -55,7 +55,7 @@ So for example, to update just the displayName for an org you could also do:
             |     displayName | new_example             |
             |            desc | description new example |
             |         website | http://new.example.io   |
-         And I send a PUT request to /organizations/{id}
+         And I send a PUT request to /organizations/{organization_id}
         Then I get a response status code 200
          And I get a response header content-type application/json
          And I get a response json based on json schema
@@ -93,7 +93,7 @@ So for example, to update just the displayName for an org you could also do:
         When I set the query parameters:
             | QUERY PARAMETER | VALUE                   |
             |           value | {new_organization}      |
-         And I send a PUT request to /organizations/{id}/name
+         And I send a PUT request to /organizations/{organization_id}/name
         Then I get a response status code 200
          And I get a response header content-type application/json
          And I get a response json based on json schema
@@ -131,7 +131,7 @@ So for example, to update just the displayName for an org you could also do:
         When I set the query parameters:
             | QUERY PARAMETER | VALUE       |
             |           value | new_example |
-         And I send a PUT request to /organizations/{id}/displayName
+         And I send a PUT request to /organizations/{organization_id}/displayName
         Then I get a response status code 200
          And I get a response header content-type application/json
          And I get a response json based on json schema
@@ -172,7 +172,7 @@ So for example, to update just the displayName for an org you could also do:
             |     displayName | new_example             |
             |            desc | description new example |
             |         website | http://new.example.io   |
-         And I send a PUT request to /organizations/{id}
+         And I send a PUT request to /organizations/{organization_id}
         Then I get a response status code 400
          And I get a response header content-type text/plain
          And I get a response text
@@ -195,7 +195,7 @@ So for example, to update just the displayName for an org you could also do:
             |     displayName | new_example         |
             |            desc | description example |
             |         website | http://example.io   |
-         And I send a PUT request to /organizations/{id}
+         And I send a PUT request to /organizations/{organization_id}
         Then I get a response status code 400
          And I get a response header content-type text/plain
          And I get a response text
@@ -218,7 +218,7 @@ So for example, to update just the displayName for an org you could also do:
             |     displayName | new_example         |
             |            desc | description example |
             |         website | http://example.io   |
-         And I send a PUT request to /organizations/{id}
+         And I send a PUT request to /organizations/{organization_id}
         Then I get a response status code 400
          And I get a response header content-type text/plain
          And I get a response text
@@ -241,7 +241,7 @@ So for example, to update just the displayName for an org you could also do:
             |     displayName |                         |
             |            desc | description new example |
             |         website | http://new.example.io   |
-         And I send a PUT request to /organizations/{id}
+         And I send a PUT request to /organizations/{organization_id}
         Then I get a response status code 400
          And I get a response header content-type text/plain
          And I get a response text

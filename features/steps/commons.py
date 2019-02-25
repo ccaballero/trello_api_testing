@@ -11,12 +11,18 @@ def step_impl(context):
     query = {}
 
     for row in context.table:
-        if match('\{[A-Za-z0-9_\-]+\}',row[1]):
+        is_template_variable = match('\{([A-Za-z0-9_\-]+)\}',row[1])
+        if is_template_variable:
             if 'generated' not in context:
                 context.generated = {}
 
-            context.generated[row[1]] = 'o'+str(uuid4()).replace('-','')
-            query[row[0]] = context.generated[row[1]]
+            if row[1] == '{list_id}':
+                query[row[0]] = context.list_id
+            elif row[1] == 'board_id}':
+                query[row[0]] = context.board_id
+            else:
+                context.generated[row[1]] = is_template_variable.group(1)+str(uuid4()).replace('-','')
+                query[row[0]] = context.generated[row[1]]
         else:
             query[row[0]] = row[1]
 
@@ -27,8 +33,9 @@ def step_impl(context):
 def step_impl(context,method,endpoint):
     context.method = method
 
-    if '{id}' in endpoint:
-        endpoint = endpoint.replace('{id}',context.id)
+    if search('\{[A-Za-z0-9_\-]+\}',endpoint):
+        for key, _value in context.generated.items():
+            endpoint = endpoint.replace(key,_value)
 
     context.endpoint = endpoint
 
@@ -72,9 +79,9 @@ def step_impl(context):
     body = loads(context.body_response)
 
     for row in context.table:
-        value = row[1]
+        value = smartcast(row[1])
 
-        if search('\{[A-Za-z0-9_\-]+\}',value):
+        if isinstance(value, str) and search('\{[A-Za-z0-9_\-]+\}',value):
             for key, _value in context.generated.items():
                 value = value.replace(key,_value)
 
@@ -84,5 +91,18 @@ def step_impl(context):
 @then(u'I get a response text')
 def step_impl(context):
     print('==> response',context.body_response)
-    expect(context.body_response).to_equal(context.text)
+    text = context.text.replace('\n','').replace('\r','')
+    expect(context.body_response).to_equal(text)
 
+def smartcast(value):
+  tests = [int, float]
+  for test in tests:
+    try:
+      return test(value)
+    except ValueError:
+      continue
+  if (value.lower() == 'true'):
+    return True
+  if (value.lower() == 'false'):
+    return False
+  return value

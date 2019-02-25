@@ -18,7 +18,7 @@ Parameters definition:
             | displayName | example             |
             |        desc | description example |
             |     website | http://example.io   |
-        When I send a GET request to /organizations/{id}
+        When I send a GET request to /organizations/{organization_id}
         Then I get a response status code 200
          And I get a response header content-type application/json
          And I get a response json based on json schema
