@@ -3,7 +3,7 @@
 Feature: Create board
 
   @acceptance @create
-  Scenario: Create list by id
+  Scenario: Create board by id
     When I set the query parameters:
       | QUERY PARAMETER | VALUE   |
       | name            | {board} |
