@@ -5,7 +5,6 @@ from requests import request
 from uuid import uuid4
 
 @given(u'I have an already created board with parameters')
-
 def step_impl(context):
     query = {
         'key':context.key,
@@ -28,15 +27,14 @@ def step_impl(context):
     expect(response.status_code).to_equal(200)
 
     body = loads(response.text)
-    print(body)###mine
     context.board_id = body['id']
 
 @given(u'I have an already created list with parameters')
-
 def step_impl(context):
     query = {
         'key':context.key,
-        'token':context.token
+        'token':context.token,
+        'idBoard':context.board_id
     }
 
     for row in context.table:
@@ -49,11 +47,11 @@ def step_impl(context):
         else:
             query[row[0]] = row[1]
 
-    response = request('POST',context.url+'/lists/{id}',params=query)
+    response = request('POST',context.url+'/lists',params=query)
     print('==> query parameters:',query)
 
     expect(response.status_code).to_equal(200)
 
     body = loads(response.text)
-    print(body)###mine
     context.list_id = body['id']
+

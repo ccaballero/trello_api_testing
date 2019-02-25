@@ -13,19 +13,17 @@ Parameters definition:
 
     @acceptance @create
     Scenario: Create a new card
-        Given I have an already created board with parameters
-            |   PARAMETER | VALUE               |
-            |        name | {board}             |
-        Given I have an already created list with parameters
-            |   PARAMETER | VALUE               |
-            |        name | {list}              |
-            |   idBoard   | {board_id}           |
-            |    idBoard | description example |
-            |     website | http://example.io   |
+       Given I have an already created board with parameters
+            | PARAMETER | VALUE   |
+            |      name | {board} |
+       Given I have an already created list with parameters
+            | PARAMETER | VALUE             |
+            |      name | {list}            |
+            |   website | http://example.io |
         When I set the query parameters:
             | QUERY PARAMETER | VALUE               |
             |            name | {card}              |
             |            desc | description example |
-            |         idList  | {list_id}            |
+            |          idList | {list_id}           |
         And I send a POST request to /cards
         Then I get a response status code 200

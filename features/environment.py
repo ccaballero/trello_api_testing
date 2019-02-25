@@ -16,8 +16,14 @@ def before_all(context):
 def after_scenario(context,scenario):
     if 'organizations' in context.tags:
         if 'acceptance' in context.tags:
-            if 'create' in context.tags or \
-               'read' in context.tags or \
+            if 'create' in context.tags:
+                request('DELETE',
+                    context.url+'/organizations/'+context.id,
+                    params={
+                        'key': context.key,
+                        'token': context.token
+                    })
+            elif 'read' in context.tags or \
                'update' in context.tags:
                 request('DELETE',
                     context.url+'/organizations/'+context.organization_id,
