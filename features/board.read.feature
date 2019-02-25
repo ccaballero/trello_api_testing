@@ -8,7 +8,7 @@ Feature: Board management GET
   Scenario: Read information of a pre-established board
     Given I have an existing board with parameters
       | PARAMETER   | VALUE        |
-      | name        | {board}      |
+      | id        | {board}      |
 
     When I send a GET request to /boards/{id}
     Then I get a response status code 200
