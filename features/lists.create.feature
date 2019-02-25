@@ -1,6 +1,6 @@
 # author: Ubaldo Villaseca
 
-@lists @crud
+@crud
 Feature: CRUD lists
 
   @acceptance @create
