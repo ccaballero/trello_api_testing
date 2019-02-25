@@ -11,11 +11,12 @@ def step_impl(context):
     query = {}
 
     for row in context.table:
-        if match('\{[A-Za-z0-9_\-]+\}',row[1]):
+        is_template_variable = match('\{([A-Za-z0-9_\-]+)\}',row[1])
+        if is_template_variable:
             if 'generated' not in context:
                 context.generated = {}
 
-            context.generated[row[1]] = 'o'+str(uuid4()).replace('-','')
+            context.generated[row[1]] = is_template_variable.group(1)+str(uuid4()).replace('-','')
             query[row[0]] = context.generated[row[1]]
         else:
             query[row[0]] = row[1]
