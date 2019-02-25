@@ -27,4 +27,6 @@ Feature: CRUD lists
           "required":["id","name","closed","idBoard", "pos", "limits"]
       }
       """
-     
+      And I get a return values:
+        | JSON PROPERTY | VALUE  |
+        |          name | {list} |
