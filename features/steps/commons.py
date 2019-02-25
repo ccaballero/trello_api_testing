@@ -18,9 +18,9 @@ def step_impl(context):
 
             if row[1] == '{board_id}':
                 query[row[0]] = context.board_id
-            elif row[1] == 'list_id}':
+            elif row[1] == '{list_id}':
                 query[row[0]] = context.list_id
-            elif row[1] == 'card_id}':
+            elif row[1] == '{card_id}':
                 query[row[0]] = context.card_id
             else:
                 context.generated[row[1]] = is_template_variable.group(1)+str(uuid4()).replace('-','')
@@ -59,6 +59,7 @@ def step_impl(context,method,endpoint):
 @then(u'I get a response status code {status_code:d}')
 def step_impl(context,status_code):
     print('==> status code:',context.status_code)
+    print('A =>',context.body_response)
     expect(context.status_code).to_equal(status_code)
 
 @then(u'I get a response header {header} {value}')
