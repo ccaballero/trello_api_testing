@@ -69,7 +69,8 @@ def step_impl(context):
 def step_impl(context):
     query = {
         'key':context.key,
-        'token':context.token
+        'token':context.token,
+        'idList':context.list_id
     }
 
     for row in context.table:

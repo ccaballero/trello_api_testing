@@ -16,10 +16,12 @@ def step_impl(context):
             if 'generated' not in context:
                 context.generated = {}
 
-            if row[1] == '{list_id}':
-                query[row[0]] = context.list_id
-            elif row[1] == 'board_id}':
+            if row[1] == '{board_id}':
                 query[row[0]] = context.board_id
+            elif row[1] == 'list_id}':
+                query[row[0]] = context.list_id
+            elif row[1] == 'card_id}':
+                query[row[0]] = context.card_id
             else:
                 context.generated[row[1]] = is_template_variable.group(1)+str(uuid4()).replace('-','')
                 query[row[0]] = context.generated[row[1]]
