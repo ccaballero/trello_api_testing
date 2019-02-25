@@ -1,16 +1,27 @@
 from compare import expect
 from json import loads
 from jsonschema import validate
+from re import match
+from re import search
 from requests import request
+from uuid import uuid4
 
 @when(u'I set the query parameters')
 def step_impl(context):
     query = {}
 
     for row in context.table:
-        query[row[0]] = row[1]
+        if match('\{[A-Za-z0-9]+\}',row[1]):
+            if 'generated' not in context:
+                context.generated = {}
+
+            context.generated[row[1]] = str(uuid4()).replace('-','')
+            query[row[0]] = context.generated[row[1]]
+        else:
+            query[row[0]] = row[1]
 
     context.parameters = query
+    print('query parameters',context.parameters)
 
 @when(u'I send a {method} request to {endpoint}')
 def step_impl(context,method,endpoint):
@@ -38,10 +49,12 @@ def step_impl(context,method,endpoint):
 
 @then(u'I get a response status code {status_code:d}')
 def step_impl(context,status_code):
+    print('status code =>',context.status_code)
     expect(context.status_code).to_equal(status_code)
 
 @then(u'I get a response header {header} {value}')
 def step_impl(context,header,value):
+    print('header',header,'=>',context.headers[header])
     expect(value in context.headers[header]).to_be_truthy()
 
 @then(u'I get a response json based on json schema')
@@ -59,7 +72,14 @@ def step_impl(context):
     body = loads(context.body_response)
 
     for row in context.table:
-        expect(body[row[0]]).to_equal(row[1])
+        value = row[1]
+
+        if search('\{[A-Za-z0-9]+\}',value):
+            for key, _value in context.generated.items():
+                value=row[1].replace(key,_value)
+
+        print('json property:',row[0],':',value)
+        expect(body[row[0]]).to_equal(value)
 
 @then(u'I get a response text')
 def step_impl(context):
