@@ -88,11 +88,6 @@ def step_impl(context):
     text = context.text.replace('\n','').replace('\r','')
     expect(context.body_response).to_equal(text)
 
-
-
-
-
-
 def smartcast(value):
   tests = [int, float]
   for test in tests:
