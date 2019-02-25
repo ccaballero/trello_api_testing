@@ -29,6 +29,11 @@ def step_impl(context):
     body = loads(response.text)
     context.board_id = body['id']
 
+    if 'generated' not in context:
+        context.generated = {}
+
+    context.generated['{board_id}'] = body['id']
+
 @given(u'I have an already created list with parameters')
 def step_impl(context):
     query = {
@@ -54,4 +59,9 @@ def step_impl(context):
 
     body = loads(response.text)
     context.list_id = body['id']
+
+    if 'generated' not in context:
+        context.generated = {}
+
+    context.generated['{list_id}'] = body['id']
 
