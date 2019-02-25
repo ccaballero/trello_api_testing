@@ -73,9 +73,9 @@ def step_impl(context):
     body = loads(context.body_response)
 
     for row in context.table:
-        value = row[1]
+        value = smartcast(row[1])
 
-        if search('\{[A-Za-z0-9_\-]+\}',value):
+        if isinstance(value, str) and search('\{[A-Za-z0-9_\-]+\}',value):
             for key, _value in context.generated.items():
                 value = value.replace(key,_value)
 
@@ -88,3 +88,20 @@ def step_impl(context):
     text = context.text.replace('\n','').replace('\r','')
     expect(context.body_response).to_equal(text)
 
+
+
+
+
+
+def smartcast(value):
+  tests = [int, float]
+  for test in tests:
+    try:
+      return test(value)
+    except ValueError:
+      continue
+  if (value.lower() == 'true'):
+    return True
+  if (value.lower() == 'false'):
+    return False
+  return value

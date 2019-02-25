@@ -1,10 +1,10 @@
 # author: Ubaldo Villaseca
 
 @crud
-Feature: CRUD lists
+Feature: Get lists
 
   @acceptance @read
-  Scenario: Get list
+  Scenario: Get list by id
     Given I have an existing board
       And I have an existing list
     When I send a GET request to /lists/{id}

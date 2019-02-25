@@ -1,10 +1,10 @@
 # author: Ubaldo Villaseca
 
-@crud
-Feature: CRUD lists
+@lists @crud
+Feature: Create lists
 
   @acceptance @create
-  Scenario: Create list
+  Scenario: Create list by id
     Given I have an existing board
     When I set the query parameters:
       | QUERY PARAMETER | VALUE       |
