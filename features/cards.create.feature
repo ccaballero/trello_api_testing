@@ -5,8 +5,6 @@
 Feature: Cards management (CREATE)
 
 Parameters definition:
-
-- desc: The description for the card
 - name: The new name for the card
 - desc: Description of the card
 - idList: The ID of the list the card should be created in
