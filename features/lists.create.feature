@@ -9,8 +9,7 @@ Feature: Create lists
     When I set the query parameters:
       | QUERY PARAMETER | VALUE       |
       |            name | {list}      |    
-      And I send a POST request to /lists?idBoard={id}
-      And I send a GET request to /lists/{id}
+      And I send a POST request to /lists?idBoard={board_id}
     Then I get a response status code 200
       And I get a response header content-type application/json
       And I get a response json based on json schema

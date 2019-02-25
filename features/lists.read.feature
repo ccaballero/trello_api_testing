@@ -7,7 +7,7 @@ Feature: Get lists
   Scenario: Get list by id
     Given I have an existing board
       And I have an existing list
-    When I send a GET request to /lists/{id}
+    When I send a GET request to /lists/{list_id}
     Then I get a response status code 200
       And I get a response header content-type application/json
       And I get a response json based on json schema
