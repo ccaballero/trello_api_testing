@@ -27,6 +27,10 @@ def step_impl(context):
     expect(response.status_code).to_equal(200)
 
     body = loads(response.text)
-    print(body)###mine
-    context.id = body['id']
+    context.organization_id = body['id']
+
+    if 'generated' not in context:
+        context.generated = {}
+
+    context.generated['{organization_id}'] = body['id']
 

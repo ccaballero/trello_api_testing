@@ -28,8 +28,9 @@ def step_impl(context):
 def step_impl(context,method,endpoint):
     context.method = method
 
-    if '{id}' in endpoint:
-        endpoint = endpoint.replace('{id}',context.id)
+    if search('\{[A-Za-z0-9_\-]+\}',endpoint):
+        for key, _value in context.generated.items():
+            endpoint = endpoint.replace(key,_value)
 
     context.endpoint = endpoint
 

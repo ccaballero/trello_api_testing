@@ -20,7 +20,7 @@ def after_scenario(context,scenario):
                'read' in context.tags or \
                'update' in context.tags:
                 request('DELETE',
-                    context.url+'/organizations/'+context.id,
+                    context.url+'/organizations/'+context.organization_id,
                     params={
                         'key': context.key,
                         'token': context.token
@@ -28,7 +28,7 @@ def after_scenario(context,scenario):
         elif 'negative' in context.tags:
             if 'update' in context.tags:
                 request('DELETE',
-                    context.url+'/organizations/'+context.id,
+                    context.url+'/organizations/'+context.organization_id,
                     params={
                         'key': context.key,
                         'token': context.token
