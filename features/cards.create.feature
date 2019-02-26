@@ -13,7 +13,7 @@ Parameters definition:
     Scenario: Create a new card
        Given I have an already created board with parameters
             | PARAMETER | VALUE   |
-            |      name | {board} |
+            |      name | {card} |
        Given I have an already created list with parameters
             | PARAMETER | VALUE             |
             |      name | {list}            |
@@ -25,3 +25,9 @@ Parameters definition:
             |          idList | {list_id}           |
         And I send a POST request to /cards
         Then I get a response status code 200
+
+          And I get a return values:
+            | JSON PROPERTY | VALUE                 |
+            |            name | {card}              |
+            |            desc | description example |
+            |          idList | {list_id}           |
