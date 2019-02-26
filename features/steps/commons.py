@@ -59,7 +59,6 @@ def step_impl(context,method,endpoint):
 @then(u'I get a response status code {status_code:d}')
 def step_impl(context,status_code):
     print('==> status code:',context.status_code)
-    print('A =>',context.body_response)
     expect(context.status_code).to_equal(status_code)
 
 @then(u'I get a response header {header} {value}')
