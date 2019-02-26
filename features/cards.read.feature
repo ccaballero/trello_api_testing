@@ -17,4 +17,7 @@ Feature: Cards management GET
             |            desc | description example |
        When I send a GET request to /cards/{card_id}
        Then I get a response status code 200
+             And I get a return values:
+             | JSON PROPERTY | VALUE     |
+             |            id | {card_id} |
 
